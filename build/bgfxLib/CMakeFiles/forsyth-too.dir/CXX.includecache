@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/wangcan/WorkSpace/BgfxProj/ProjectPhoenix/bgfxLib/bgfx/3rdparty/forsyth-too/forsythtriangleorderoptimizer.cpp
+stdint.h
+-
+assert.h
+-
+math.h
+-
+vector
+-
+algorithm
+-
+

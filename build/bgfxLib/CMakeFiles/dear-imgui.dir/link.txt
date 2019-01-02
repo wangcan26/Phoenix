@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libdear-imgui.a  CMakeFiles/dear-imgui.dir/bgfx/3rdparty/dear-imgui/imgui.cpp.o CMakeFiles/dear-imgui.dir/bgfx/3rdparty/dear-imgui/imgui_demo.cpp.o CMakeFiles/dear-imgui.dir/bgfx/3rdparty/dear-imgui/imgui_draw.cpp.o CMakeFiles/dear-imgui.dir/bgfx/3rdparty/dear-imgui/imgui_widgets.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libdear-imgui.a

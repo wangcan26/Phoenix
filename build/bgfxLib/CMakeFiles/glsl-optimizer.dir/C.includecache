@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/wangcan/WorkSpace/BgfxProj/ProjectPhoenix/bgfxLib/bgfx/3rdparty/glsl-optimizer/src/glsl/strtod.c
+stdlib.h
+-
+locale.h
+-
+xlocale.h
+-
+strtod.h
+/Users/wangcan/WorkSpace/BgfxProj/ProjectPhoenix/bgfxLib/bgfx/3rdparty/glsl-optimizer/src/glsl/strtod.h
+
+/Users/wangcan/WorkSpace/BgfxProj/ProjectPhoenix/bgfxLib/bgfx/3rdparty/glsl-optimizer/src/glsl/strtod.h
+
