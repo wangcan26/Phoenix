@@ -34,7 +34,12 @@ use_cxx()
 set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
 # the main part
-set(sources_main main.cc)
+set(sources_main main.cc 
+    render_utils.cc
+    file_utils.cc
+    common.cc
+    phoenix_api.cc
+  )
 add_executable(phoenix_main ${sources_main})
 
 add_subdirectory(bgfxLib)
@@ -53,3 +58,5 @@ include_directories(${THIRD_PARTY_DIR}/include)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbgfx.a)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbimg.a)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbx.a)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR})

@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libetc2.a  CMakeFiles/etc2.dir/bimg/3rdparty/etc2/ProcessRGB.cpp.o CMakeFiles/etc2.dir/bimg/3rdparty/etc2/Tables.cpp.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libetc2.a

@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libib-compress.a  CMakeFiles/ib-compress.dir/bgfx/3rdparty/ib-compress/indexbuffercompression.cpp.o CMakeFiles/ib-compress.dir/bgfx/3rdparty/ib-compress/indexbufferdecompression.cpp.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libib-compress.a

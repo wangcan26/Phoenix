@@ -1,1 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -ObjC++ --std=c++14 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/texturec.dir/bimg/tools/texturec/texturec.cpp.o  -o texturec libbimg.a libastc.a libedtaa3.a libetc1.a libetc2.a libiqa.a libsquish.a libnvtt.a libbx.a -framework Foundation libpvrtc.a 

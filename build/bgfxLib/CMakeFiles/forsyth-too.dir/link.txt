@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libforsyth-too.a  CMakeFiles/forsyth-too.dir/bgfx/3rdparty/forsyth-too/forsythtriangleorderoptimizer.cpp.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libforsyth-too.a

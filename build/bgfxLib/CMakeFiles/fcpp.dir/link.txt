@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libfcpp.a  CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp1.c.o CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp2.c.o CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp3.c.o CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp4.c.o CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp5.c.o CMakeFiles/fcpp.dir/bgfx/3rdparty/fcpp/cpp6.c.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libfcpp.a
