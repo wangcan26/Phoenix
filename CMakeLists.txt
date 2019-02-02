@@ -27,8 +27,14 @@ macro(ADD_FRAMEWORK fwname appname)
 endmacro(ADD_FRAMEWORK)
 endif(APPLE)
 
+#set flags
+set(CMAKE_C_FLAGS "-Wc++98-compat")
+
 #  settings env config
 use_cxx()
+
+#set cmake module path
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 #  settings thirdparty config
 set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/install)
@@ -42,7 +48,8 @@ set(sources_main main.cc
   )
 add_executable(phoenix_main ${sources_main})
 
-add_subdirectory(bgfxLib)
+#add external library to this project
+add_subdirectory(external)
 
 #link xcode system libraries
 if(APPLE)
@@ -58,5 +65,12 @@ include_directories(${THIRD_PARTY_DIR}/include)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbgfx.a)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbimg.a)
 target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbx.a)
+
+#link external libraries
+#find_package(GLFW3 REQUIRED)
+message("Find GLFW3 include path -> ${GLFW3_INCLUDE_DIR}: lib -> ${GLFW3_LIBRARY}")
+include_directories(${GLFW3_INCLUDE_DIR})
+
+target_link_libraries(phoenix_main ${GLFW3_LIBRARY})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR})

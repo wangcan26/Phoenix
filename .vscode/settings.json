@@ -1,5 +1,4 @@
 {
-    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "files.associations": {
         "*.vue": "vue",
         "ios": "cpp",
@@ -19,12 +18,14 @@
         "__node_handle": "cpp",
         "array": "cpp",
         "optional": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp"
     },
     "C_Cpp.default.includePath": [
         "/usr/include",
         "/usr/local/include",
         "${workspaceRoot}",
+        "${workspaceRoot}/install/include",
         "${workspaceRoot}/bgfxLib/bgfx/include",
         "${workspaceRoot}/bgfxLib/bimg/include",
         "${workspaceRoot}/bgfxLib/bx/include"

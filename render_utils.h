@@ -3,10 +3,8 @@
 
 namespace px
 {
-
     namespace render
     {
-
         bgfx::ShaderHandle LoadShader(bx::FileReaderI* reader, const char* name);
         
         bgfx::ProgramHandle LoadProgram(bx::FileReaderI* reader, const char *vs_name, const char *fs_name);

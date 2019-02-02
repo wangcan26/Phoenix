@@ -1,24 +1,63 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/defines.h>
 #include <bx/pixelformat.h>
+#include <bx/timer.h>
+
+//#include <GLFW/glfw3.h>
+
 #include <iostream>
 
 #include "phoenix_api.h"
 #include "cube.h"
 
+//Functions
+static void ErrorCb(int error, const char *description)
+{
+	DBG("GLFW error %d: %s", error, description);
+}
+
+//RenderThread for run rendering api
+
+
+
+
 int main(int argc, char **argv)
 {
 	std::cout << "test bgfx ..." << std::endl;
+	//Init glfw for creating window
+	/*glfwSetErrorCallback(ErrorCb);
+	if(!glfwInit())
+	{
+		DBG("glfwInit failed!");
+		return 1;
+	}
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	*/
+
+
+	//Init
+	uint32_t m_width = 1280;
+	uint32_t m_height = 720;
+
+	int64_t  m_time_offset;
+	bool     m_r = true;
+	bool     m_g = true;
+	bool     m_b = true;
+	bool     m_a = true;
 
 	//Init Phoenix Api
 	px::PXInit();
 
+	//Init Window
+
+
 	// Init bgfx
 	bgfx::Init init;
-	init.type = bgfx::RendererType::OpenGLES;
-	init.vendorId = BGFX_PCI_ID_INTEL;
-	init.resolution.width = 800;
-	init.resolution.height = 600;
+	init.type = bgfx::RendererType::OpenGL;
+	init.vendorId = 0;
+	init.resolution.width = m_width;
+	init.resolution.height = m_height;
 	init.resolution.reset = BGFX_RESET_VSYNC;
 
 	bgfx::init(init);
@@ -44,14 +83,74 @@ int main(int argc, char **argv)
 	m_ibh[0] = bgfx::createIndexBuffer(
 		bgfx::makeRef(px::kCubeTriList, sizeof(px::kCubeTriList)));
 
-	uint32_t m_size;
-	px::LoadTexture("textures/rgb.hdr", 0 | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP | BGFX_SAMPLER_W_CLAMP);
-	std::cout << "test bgfx load texture size: " << m_size << std::endl;
-
 	// Create program from shaders
 	bgfx::ProgramHandle m_program;
-	//m_program = px::LoadProgram("vs_cubes", "fs_cubes");
-	
+	m_program = px::LoadProgram("vs_cubes", "fs_cubes");
+	DBG("Create ProgramHandle %d", m_program.idx);
+	m_time_offset = bx::getHPCounter();
+	bgfx::frame();
+
+	//Update 
+	while(1)
+	{
+
+		float time = (float)( (bx::getHPCounter() - m_time_offset)/double(bx::getHPFrequency()));
+
+		//Set view and projection matrix for view 0
+		const bx::Vec3 at = {0.0f, 0.0f, 0.0f};
+		const bx::Vec3 eye = {0.0f, 0.0f, -35.0f};
+		{
+			float view[16];
+			bx::mtxLookAt(view, eye, at);
+
+			float proj[16];
+			bx::mtxProj(proj, 60.0f, float(m_width)/float(m_height), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
+		}
+
+		//This dummy draw call is here to make sure that view 0 is cleared
+		//if no other draw calls are submitted to view 0.
+		bgfx::touch(0);
+
+		bgfx::IndexBufferHandle ibh = m_ibh[0];
+		uint64_t state = 0 
+			| (m_r ? BGFX_STATE_WRITE_R : 0)
+			| (m_g ? BGFX_STATE_WRITE_G : 0)
+			| (m_b ? BGFX_STATE_WRITE_B : 0)
+			| (m_a ? BGFX_STATE_WRITE_A : 0)
+			| BGFX_STATE_WRITE_Z
+			| BGFX_STATE_DEPTH_TEST_LESS
+			| BGFX_STATE_CULL_CW
+			| BGFX_STATE_MSAA
+			| px::kDTState[0]
+			;
+
+		//Submit 11x11 cubes
+		for(uint32_t yy = 0; yy < 11; ++yy)
+		{
+			for(uint32_t xx = 0; xx < 11; ++xx)
+			{
+				float mtx[16];
+				bx::mtxRotateXY(mtx, time + xx*0.21f, time + yy*0.37f);
+				mtx[12] = -15.0f + float(xx)*3.0f;
+				mtx[13] = -15.0f + float(yy)*3.0f;
+				mtx[14] = 0.0f;
+
+				//Set model matrix for rendering
+				bgfx::setTransform(mtx);
+				//Set vertex and index buffer.
+				bgfx::setVertexBuffer(0, m_vbh);
+				bgfx::setIndexBuffer(ibh);
+
+				//Set render states
+				bgfx::setState(state);
+
+				//Submit primitive for rendering to view 0.
+				bgfx::submit(0, m_program);
+			}
+		}
+
+		bgfx::frame();
+	}
 
 	return 0;
 }
