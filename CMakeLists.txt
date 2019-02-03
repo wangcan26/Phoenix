@@ -44,33 +44,27 @@ set(sources_main main.cc
     render_utils.cc
     file_utils.cc
     common.cc
+    context.cc
     phoenix_api.cc
   )
 add_executable(phoenix_main ${sources_main})
 
-#add external library to this project
-add_subdirectory(external)
+include_directories(${THIRD_PARTY_DIR}/include)
+#link bgfx
+target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbgfx.a)
+target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbimg.a)
+target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbx.a)
+#link glfw
+target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libglfw3.a)
 
 #link xcode system libraries
 if(APPLE)
 	ADD_FRAMEWORK(Foundation phoenix_main)
 	ADD_FRAMEWORK(Cocoa phoenix_main)
 	ADD_FRAMEWORK(Metal phoenix_main)
-	ADD_FRAMEWORK(QuartzCore phoenix_main)
+  ADD_FRAMEWORK(QuartzCore phoenix_main)
+  ADD_FRAMEWORK(CoreFoundation phoenix_main)
+  ADD_FRAMEWORK(IOKit phoenix_main)
 endif(APPLE)
-
-#link bgfx
-include_directories(${THIRD_PARTY_DIR}/include)
-
-target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbgfx.a)
-target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbimg.a)
-target_link_libraries(phoenix_main ${THIRD_PARTY_DIR}/lib/libbx.a)
-
-#link external libraries
-#find_package(GLFW3 REQUIRED)
-message("Find GLFW3 include path -> ${GLFW3_INCLUDE_DIR}: lib -> ${GLFW3_LIBRARY}")
-include_directories(${GLFW3_INCLUDE_DIR})
-
-target_link_libraries(phoenix_main ${GLFW3_LIBRARY})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR})

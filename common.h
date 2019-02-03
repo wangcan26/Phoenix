@@ -6,6 +6,14 @@
 #include <bx/string.h>
 #include <bgfx/bgfx.h>
 #include <bimg/bimg.h>
+struct TinyStlAllocator
+{
+    static void* static_allocate(size_t bytes);
+    static void static_deallocate(void* ptr, size_t /*bytes*/);
+};
+
+#define  TINYSTL_ALLOCATOR TinyStlAllocator
+#include <tinystl/string.h>
 
 #include "log.h"
 

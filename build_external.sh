@@ -3,7 +3,7 @@
 cd ./external/bgfxLib
 git submodule init
 git submodule update
-cd ../../
+cd ../
 
 if [ ! -d "./build" ]; then
     mkdir ./build
@@ -11,11 +11,10 @@ fi
 
 cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=../install \
+cmake -DCMAKE_INSTALL_PREFIX=../../install \
     -G "CodeLite - Unix Makefiles" \
     ..
 
-make && make install
+make -j8 && make install
 
-
-cd ..
+cd ../..

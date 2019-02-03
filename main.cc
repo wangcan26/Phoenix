@@ -2,13 +2,34 @@
 #include <bgfx/defines.h>
 #include <bx/pixelformat.h>
 #include <bx/timer.h>
+#include <bx/handlealloc.h>
+#include <bx/spscqueue.h>
+#include <bx/thread.h>
 
-//#include <GLFW/glfw3.h>
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 #include <iostream>
 
+#include "context.h"
 #include "phoenix_api.h"
 #include "cube.h"
+
+//macros
+
+//enums
+
+
+//RenderThread for run rendering api
+struct RenderThread
+{
+	int m_argc;
+	const char* const *m_argv;
+	px::WindowContext *m_win_ctx;
+
+	static int32_t ThreadFunc(bx::Thread* thread, void *user_data);
+};
+
 
 //Functions
 static void ErrorCb(int error, const char *description)
@@ -16,26 +37,38 @@ static void ErrorCb(int error, const char *description)
 	DBG("GLFW error %d: %s", error, description);
 }
 
-//RenderThread for run rendering api
+static int32_t MAIN(int argc, const char* const *argv, px::WindowContext *win_ctx)
+{
+	//Init Phoenix Api
+	DBG("Executing MAIN ------");
+	px::PXInit();
+
+	px::WindowHandle default_window = {0};
+	//Set Default title
+	bx::FilePath fp(argv[0]);
+	char title[bx::kMaxFilePath];
+	bx::strCopy(title, BX_COUNTOF(title), fp.getBaseName());
+	px::SetWindowTitle(*win_ctx, default_window, title);
+
+	int32_t result = bx::kExitSuccess;
 
 
 
+	return result;
+}
+
+int32_t RenderThread::ThreadFunc(bx::Thread* thread, void *user_data)
+{
+	BX_UNUSED(thread);
+	RenderThread *self = (RenderThread*)(user_data);
+	int32_t result = MAIN(self->m_argc, self->m_argv, self->m_win_ctx);
+
+	px::DestroyMainWindow(*self->m_win_ctx);
+}
 
 int main(int argc, char **argv)
 {
 	std::cout << "test bgfx ..." << std::endl;
-	//Init glfw for creating window
-	/*glfwSetErrorCallback(ErrorCb);
-	if(!glfwInit())
-	{
-		DBG("glfwInit failed!");
-		return 1;
-	}
-
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	*/
-
-
 	//Init
 	uint32_t m_width = 1280;
 	uint32_t m_height = 720;
@@ -46,12 +79,24 @@ int main(int argc, char **argv)
 	bool     m_b = true;
 	bool     m_a = true;
 
-	//Init Phoenix Api
-	px::PXInit();
 
-	//Init Window
+	//Init glfw for creating window
+	px::WindowContext  window_ctx;
+	window_ctx.Init(m_width, m_height, &ErrorCb);
 
+	//Create Renderer thread
+	RenderThread  m_render_self;
+	m_render_self.m_argc = argc;
+	m_render_self.m_argv = argv;
+	m_render_self.m_win_ctx = &window_ctx;
+	bx::Thread m_thread;
+	m_thread.init(RenderThread::ThreadFunc, &m_render_self);
 
+	//Something with the main thread
+	window_ctx.Run();
+
+	m_thread.shutdown();
+	/*
 	// Init bgfx
 	bgfx::Init init;
 	init.type = bgfx::RendererType::OpenGL;
@@ -151,6 +196,7 @@ int main(int argc, char **argv)
 
 		bgfx::frame();
 	}
+	*/
 
 	return 0;
 }
