@@ -24,6 +24,8 @@ namespace px
         const bgfx::Memory* LoadMem(bx::FileReaderI* reader, const char* file_path);
 
         void* Load(bx::FileReaderI* reader, bx::AllocatorI* allocator, const char* file_path, uint32_t* size);
+
+        void UnLoad(void *ptr);
         
     } // namespace file
 

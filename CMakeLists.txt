@@ -41,11 +41,17 @@ set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
 # the main part
 set(sources_main main.cc 
+    common.cc
     render_utils.cc
     file_utils.cc
-    common.cc
     context.cc
+    input.cc
+    event_consumer.cc
+    camera.cc
     phoenix_api.cc
+    scene.cc
+    cube.cc
+    mesh_texture.cc
   )
 add_executable(phoenix_main ${sources_main})
 

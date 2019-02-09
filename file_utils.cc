@@ -62,6 +62,9 @@ namespace px
              return NULL;
         }
 
-        
+        void UnLoad(void* ptr)
+        {
+            BX_FREE(GetDefaultAllocator(), ptr);
+        }
     }
 }

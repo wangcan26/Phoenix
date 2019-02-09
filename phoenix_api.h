@@ -3,14 +3,20 @@
 
 namespace px
 {
+    namespace render
+    {
+        class Mesh;
+    }
 
     void PXInit();
-    void PXDeInit();
+    void PXShutdown();
 
     bx::FileReaderI *GetFileReader();
     bx::FileWriterI *GetFileWriter();
 
     void* Load(const char* file_path, uint32_t* size);
+
+    render::Mesh *LoadMesh(const char* file_path);
 
     bgfx::ProgramHandle LoadProgram(const char *vs_name, const char* fs_name);
     

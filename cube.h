@@ -2,6 +2,7 @@
 
 #include <bgfx/bgfx.h>
 #include <bimg/bimg.h>
+#include <bx/bx.h>
 
 namespace px {
 //专门用来渲染颜色顶点信息
@@ -20,42 +21,37 @@ struct PosColorVertex {
   static bgfx::VertexDecl kDecl;
 };
 
-bgfx::VertexDecl PosColorVertex::kDecl;
 
-// A Cube
-PosColorVertex kCubeVertices[] = {
-    {-1.0f, 1.0f, 1.0f, 0xff000000},   {1.0f, 1.0f, 1.0f, 0xff0000ff},
-    {-1.0f, -1.0f, 1.0f, 0xff00ff00},  {1.0f, -1.0f, 1.0f, 0xff00ffff},
-    {-1.0f, 1.0f, -1.0f, 0xffff0000},  {1.0f, 1.0f, -1.0f, 0xffff00ff},
-    {-1.0f, -1.0f, -1.0f, 0xffffff00}, {1.0f, -1.0f, -1.0f, 0xffffffff},
+/**
+ * @brief Cube 虽然是用来渲染立方体的， 但是它是用来证明Position-Color VertexDecl和渲染一个简单的prebuilt demo的
+ * 最好例子
+ * 
+ */
+class MouseState;
+class Cube
+{
+public:
+    Cube();
+
+    ~Cube();
+
+    void Init(uint32_t width, uint32_t height);
+
+    bool Update(float delta_time, MouseState* mouse);
+
+    void Shutdown();
+
+private:
+    bgfx::VertexBufferHandle m_vbh;
+    bgfx::IndexBufferHandle  m_ibh[5];
+    bgfx::ProgramHandle      m_program;
+
+    uint32_t                 m_width, m_height;
+    float                    m_elapsed_time;
+    bool                     m_a;
+    bool                     m_r;
+    bool                     m_g;
+    bool                     m_b;
 };
-
-const uint16_t kCubeTriList[] = {
-    0, 1,
-    2,  // 0
-    1, 3, 2, 4, 6,
-    5,  // 2
-    5, 6, 7, 0, 2,
-    4,  // 4
-    4, 2, 6, 1, 5,
-    3,  // 6
-    5, 7, 3, 0, 4,
-    1,  // 8
-    4, 5, 1, 2, 3,
-    6,  // 10
-    6, 3, 7,
-};
-
-const char *kDTNames[]{
-    "Triangle List", "Triangle Strip", "Lines", "Line Strip", "Points",
-};
-
-const uint64_t kDTState[]{
-    UINT16_C(0),          BGFX_STATE_PT_TRISTRIP,
-    BGFX_STATE_PT_LINES,  BGFX_STATE_PT_LINESTRIP,
-    BGFX_STATE_PT_POINTS,
-};
-
-BX_STATIC_ASSERT(BX_COUNTOF(kDTState) == BX_COUNTOF(kDTNames));
 
 }  // namespace px

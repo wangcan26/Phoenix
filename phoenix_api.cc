@@ -13,7 +13,7 @@ namespace px
         kFileWriter = BX_NEW(GetDefaultAllocator(), file::FileWriter);
     }
 
-    void PXDeInit(){
+    void PXShutdown(){
         BX_DELETE(GetDefaultAllocator(), kFileReader);
         kFileReader = NULL;
 
@@ -39,6 +39,20 @@ namespace px
     void* Load(const char* file_path, uint32_t* size)
     {
         return file::Load(GetFileReader(), GetDefaultAllocator(), file_path, size);
+    }
+
+    render::Mesh *LoadMesh(const char* file_path)
+    {
+        using namespace render;
+        bx::FileReaderI *reader = GetFileReader();
+        if(bx::open(reader, file_path))
+        {
+            Mesh *mesh = render::LoadMesh(reader);
+            bx::close(reader);
+            return mesh;
+        }
+
+        return NULL;
     }
 
     bgfx::TextureHandle LoadTexture(const char* name, uint32_t flags, uint8_t skip, bgfx::TextureInfo* info, bimg::Orientation::Enum* orientation)
