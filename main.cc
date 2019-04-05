@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 {
 	std::cout << "test bgfx ..." << std::endl;
 	//Init
-	uint32_t m_width = 800;
-	uint32_t m_height = 600;
+	uint32_t m_width = 960;
+	uint32_t m_height = 720;
 
 	//Init glfw for creating window
 	//px::WindowContext  window_ctx;

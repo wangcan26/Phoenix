@@ -110,7 +110,7 @@ namespace px
                                 mouse->m_my = _mouse->m_my;
                                 mouse->m_mz = _mouse->m_mz;
 
-                                DBG("Can Test Process Mouse Event %d, %d", mouse->m_mx, mouse->m_my);
+                                //DBG("Can Test Process Mouse Event %d, %d", mouse->m_mx, mouse->m_my);
                                 if(!_mouse->m_move)
                                 {
                                     mouse->m_buttons[_mouse->m_button] = _mouse->m_down;

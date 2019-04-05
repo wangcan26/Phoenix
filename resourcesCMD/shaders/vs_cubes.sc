@@ -1,12 +1,14 @@
-attribute vec4 a_color0;
 attribute vec3 a_position;
-varying   vec4 v_color0;
-uniform   mat4 u_modelViewProj;
+attribute vec2 a_texcoord0;
+uniform   mat4 u_proj;
+uniform   mat4 u_view;
+
+varying   vec3  v_worldPos;
+
 void main()
 {
-    vec4 tmpvar_1;
-    tmpvar_1.w = 1.0;
-    tmpvar_1.xyz = a_position;
-    gl_Position = (u_modelViewProj*tmpvar_1);
-    v_color0 = a_color0;
+    v_worldPos = a_position;
+    mat4 rotView = mat4(mat3(u_view));
+    vec4 clipPos = u_proj*rotView*vec4(v_worldPos, 1.0);
+    gl_Position = clipPos.xyzw;
 }

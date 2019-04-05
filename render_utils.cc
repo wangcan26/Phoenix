@@ -244,7 +244,7 @@ namespace px
 
                 if(NULL != _image_container)
                 {
-                    DBG("The Image %s 's size is %d, %d", file_path, _image_container->m_width, _image_container->m_height);
+                    DBG("The Image %s 's size is %d, %d, mipmap is %d", file_path, _image_container->m_width, _image_container->m_height, _image_container->m_numMips);
                     if(NULL != orientation)
                     {
                         *orientation = _image_container->m_orientation;

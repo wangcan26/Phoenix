@@ -4,6 +4,22 @@
 namespace px
 {
     class MouseState;
+
+    struct ObjectPrefab
+    {   
+        bgfx::VertexBufferHandle  m_vbh;
+        bgfx::IndexBufferHandle   m_ibh;
+
+        bgfx::UniformHandle       m_texu;
+        bgfx::ProgramHandle       m_programh;
+        bgfx::TextureHandle       m_texh;
+    };
+
+    struct RenderPlanePrefab : ObjectPrefab
+    {
+        bgfx::FrameBufferHandle  m_fbo;
+    }; 
+
     class MeshTexture
     {
     public:
@@ -30,7 +46,12 @@ namespace px
         Mouse               m_mouse;
 
         uint32_t            m_width, m_height;
-        render::Mesh        *m_background;
+        ObjectPrefab        m_back_plane;
+        ObjectPrefab        m_back_cube;
+        RenderPlanePrefab   m_irradiance_plane;
+        RenderPlanePrefab   m_radiance_plane;
+        RenderPlanePrefab   m_brdf_plane;
+        render::Mesh        *m_back_sphere;
         render::Mesh        *m_orb;
         float               m_time;
     };

@@ -1,5 +1,11 @@
-varying vec4 v_color0;
+varying vec3 v_worldPos;
+uniform samplerCube s_cubeMap;
+
 void main()
 {
-    gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);//v_color0;
+    vec3 envColor = textureCube(s_cubeMap, v_worldPos).rgb;
+    //HDR tonemap and gamma correct
+    envColor = envColor/(envColor + vec3(1.0));
+    envColor = pow(envColor, vec3(1.0/2.2));
+    gl_FragColor = vec4(envColor, 1.0);
 }
