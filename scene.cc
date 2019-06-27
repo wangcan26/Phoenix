@@ -15,7 +15,7 @@ namespace px
     Scene::Scene():
         m_width(800)
         ,m_height(600)
-        ,m_obj(NULL) 
+        ,m_render_filter(NULL) 
     {
         PXInit();
     }
@@ -34,8 +34,8 @@ namespace px
 
         InputInit();
 
-        m_obj = new MeshTexture();
-        m_obj->Init(width, height);
+        m_render_filter = new Cube();
+        m_render_filter->Init(width, height);
         
 
     }
@@ -48,9 +48,9 @@ namespace px
             //DBG("Can Test Scene after ProcessEvents begin----");
             float delta_time = (float) ( (bx::getHPCounter() - m_time_offset)/double(bx::getHPFrequency()));
             bool res = false;
-            if(m_obj != NULL)
+            if(m_render_filter != NULL)
             {
-                res =  m_obj->Update(delta_time, &m_mouse_state);
+                res =  m_render_filter->Update(delta_time, &m_mouse_state);
             }
             m_time_offset = bx::getHPCounter();
             //DBG("Can Test Scene Update begin--");
@@ -146,11 +146,11 @@ namespace px
 
     void Scene::Shutdown()
     {
-        if(m_obj != NULL)
+        if(m_render_filter != NULL)
         {
-            m_obj->Shutdown();
-            delete m_obj;
-            m_obj = NULL;
+            m_render_filter->Shutdown();
+            delete m_render_filter;
+            m_render_filter = NULL;
         }
 
         InputShutdown();

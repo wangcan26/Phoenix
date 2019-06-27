@@ -1,8 +1,6 @@
 #pragma once
 
-#include <bgfx/bgfx.h>
-#include <bimg/bimg.h>
-#include <bx/bx.h>
+#include "render_filter.h"
 
 namespace px {
 //专门用来渲染颜色顶点信息
@@ -27,19 +25,18 @@ struct PosColorVertex {
  * 最好例子
  * 
  */
-class MouseState;
-class Cube
+class Cube : public IRenderFilter
 {
 public:
     Cube();
 
     ~Cube();
 
-    void Init(uint32_t width, uint32_t height);
+    void Init(uint32_t width, uint32_t height) override;
 
-    bool Update(float delta_time, MouseState* mouse);
+    bool Update(float delta_time, MouseState* mouse) override;
 
-    void Shutdown();
+    void Shutdown() override;
 
 private:
     bgfx::VertexBufferHandle m_vbh;

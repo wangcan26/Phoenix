@@ -6,8 +6,7 @@
 
 namespace px
 {
-    class Cube;
-    class MeshTexture;
+    class IRenderFilter;
     class Scene
     {
     public:
@@ -29,8 +28,8 @@ namespace px
         uint32_t                 m_width, m_height;
 
         //Cube                     *m_cube;
-        MeshTexture                *m_obj;
-
+        //MeshTexture                *m_obj;
+        IRenderFilter              *m_render_filter;
         MouseState                 m_mouse_state;
     };
 }

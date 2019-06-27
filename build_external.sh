@@ -12,6 +12,8 @@ fi
 cd build
 
 cmake -DCMAKE_INSTALL_PREFIX=../../install \
+    -DBGFX_BUILD_EXAMPLES=ON \
+    -DBGFX_INSTALL_EXAMPLES=ON \
     -G "CodeLite - Unix Makefiles" \
     ..
 
